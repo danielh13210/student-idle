@@ -667,6 +667,7 @@ class HighPage(Frame):
         self.button_set_color = Button(
                 self.frame_color_set, text='Choose Color for :',
                 command=self.get_color)
+        self.button_set_color.state(('disabled',))
         self.targetlist = DynOptionMenu(
                 self.frame_color_set, self.highlight_target, None,
                 highlightthickness=0) #, command=self.set_highlight_targetBinding
@@ -677,9 +678,9 @@ class HighPage(Frame):
                 frame_fg_bg_toggle, variable=self.fg_bg_toggle, value=0,
                 text='Background', command=self.set_color_sample_binding)
         self.fg_bg_toggle.set(1)
-        self.button_save_custom = Button(
-                frame_custom, text='Save as New Custom Theme',
-                command=self.save_as_new_theme)
+        #self.button_save_custom = Button(
+        #        frame_custom, text='Save as New Custom Theme',
+        #        command=self.save_as_new_theme)
         # frame_theme.
         theme_type_title = Label(frame_theme, text='Select : ')
         self.builtin_theme_on = Radiobutton(
@@ -692,9 +693,9 @@ class HighPage(Frame):
                 frame_theme, self.builtin_name, None, command=None)
         self.customlist = DynOptionMenu(
                 frame_theme, self.custom_name, None, command=None)
-        self.button_delete_custom = Button(
-                frame_theme, text='Delete Custom Theme',
-                command=self.delete_custom)
+        #self.button_delete_custom = Button(
+        #        frame_theme, text='Delete Custom Theme',
+        #        command=self.delete_custom)
         self.theme_message = Label(frame_theme, borderwidth=2)
         # Pack widgets:
         # body.
@@ -709,14 +710,14 @@ class HighPage(Frame):
         self.targetlist.pack(side=TOP, expand=TRUE, fill=X, padx=8, pady=3)
         self.fg_on.pack(side=LEFT, anchor=E)
         self.bg_on.pack(side=RIGHT, anchor=W)
-        self.button_save_custom.pack(side=BOTTOM, fill=X, padx=5, pady=5)
+        #self.button_save_custom.pack(side=BOTTOM, fill=X, padx=5, pady=5)
         # frame_theme.
         theme_type_title.pack(side=TOP, anchor=W, padx=5, pady=5)
         self.builtin_theme_on.pack(side=TOP, anchor=W, padx=5)
         self.custom_theme_on.pack(side=TOP, anchor=W, padx=5, pady=2)
         self.builtinlist.pack(side=TOP, fill=X, padx=5, pady=5)
         self.customlist.pack(side=TOP, fill=X, anchor=W, padx=5, pady=5)
-        self.button_delete_custom.pack(side=TOP, fill=X, padx=5, pady=5)
+        #self.button_delete_custom.pack(side=TOP, fill=X, padx=5, pady=5)
         self.theme_message.pack(side=TOP, fill=X, pady=5)
 
     def load_theme_cfg(self):
@@ -843,12 +844,12 @@ class HighPage(Frame):
         if self.theme_source.get():
             self.builtinlist['state'] = 'normal'
             self.customlist['state'] = 'disabled'
-            self.button_delete_custom.state(('disabled',))
+            #self.button_delete_custom.state(('disabled',))
         else:
             self.builtinlist['state'] = 'disabled'
             self.custom_theme_on.state(('!disabled',))
             self.customlist['state'] = 'normal'
-            self.button_delete_custom.state(('!disabled',))
+            #self.button_delete_custom.state(('!disabled',))
 
     def get_color(self):
         """Handle button to select a new color for the target tag.
@@ -1219,7 +1220,7 @@ class KeysPage(Frame):
         # body and section frames.
         frame_custom = LabelFrame(
                 self, borderwidth=2, relief=GROOVE,
-                text=' Custom Key Bindings ')
+                text=' Key Bindings (read only) ')
         frame_key_sets = LabelFrame(
                 self, borderwidth=2, relief=GROOVE, text=' Key Set ')
         # frame_custom.
@@ -1235,9 +1236,9 @@ class KeysPage(Frame):
         scroll_target_x['command'] = self.bindingslist.xview
         self.bindingslist['yscrollcommand'] = scroll_target_y.set
         self.bindingslist['xscrollcommand'] = scroll_target_x.set
-        self.button_new_keys = Button(
-                frame_custom, text='Get New Keys for Selection',
-                command=self.get_new_keys, state='disabled')
+        #self.button_new_keys = Button(
+        #        frame_custom, text='Get New Keys for Selection',
+        #        command=self.get_new_keys, state='disabled')
         # frame_key_sets.
         frames = [Frame(frame_key_sets, padding=2, borderwidth=0)
                   for i in range(2)]
@@ -1251,12 +1252,12 @@ class KeysPage(Frame):
                 frames[0], self.builtin_name, None, command=None)
         self.customlist = DynOptionMenu(
                 frames[0], self.custom_name, None, command=None)
-        self.button_delete_custom_keys = Button(
-                frames[1], text='Delete Custom Key Set',
-                command=self.delete_custom_keys)
-        self.button_save_custom_keys = Button(
-                frames[1], text='Save as New Custom Key Set',
-                command=self.save_as_new_key_set)
+        #self.button_delete_custom_keys = Button(
+        #        frames[1], text='Delete Custom Key Set',
+        #        command=self.delete_custom_keys)
+        #self.button_save_custom_keys = Button(
+        #        frames[1], text='Save as New Custom Key Set',
+        #        command=self.save_as_new_key_set)
         self.keys_message = Label(frames[0], borderwidth=2)
 
         # Pack widgets:
@@ -1264,7 +1265,7 @@ class KeysPage(Frame):
         frame_custom.pack(side=BOTTOM, padx=5, pady=5, expand=TRUE, fill=BOTH)
         frame_key_sets.pack(side=BOTTOM, padx=5, pady=5, fill=BOTH)
         # frame_custom.
-        self.button_new_keys.pack(side=BOTTOM, fill=X, padx=5, pady=5)
+        #self.button_new_keys.pack(side=BOTTOM, fill=X, padx=5, pady=5)
         frame_target.pack(side=LEFT, padx=5, pady=5, expand=TRUE, fill=BOTH)
         # frame_target.
         frame_target.columnconfigure(0, weight=1)
@@ -1279,8 +1280,8 @@ class KeysPage(Frame):
         self.builtinlist.grid(row=0, column=1, sticky=NSEW)
         self.customlist.grid(row=1, column=1, sticky=NSEW)
         self.keys_message.grid(row=0, column=2, sticky=NSEW, padx=5, pady=5)
-        self.button_delete_custom_keys.pack(side=LEFT, fill=X, expand=True, padx=2)
-        self.button_save_custom_keys.pack(side=LEFT, fill=X, expand=True, padx=2)
+        #self.button_delete_custom_keys.pack(side=LEFT, fill=X, expand=True, padx=2)
+        #self.button_save_custom_keys.pack(side=LEFT, fill=X, expand=True, padx=2)
         frames[0].pack(side=TOP, fill=BOTH, expand=True)
         frames[1].pack(side=TOP, fill=X, expand=True, pady=2)
 
@@ -1365,15 +1366,18 @@ class KeysPage(Frame):
 
     def set_keys_type(self):
         "Set available screen options based on builtin or custom key set."
-        if self.keyset_source.get():
+        """if self.keyset_source.get():
             self.builtinlist['state'] = 'normal'
             self.customlist['state'] = 'disabled'
-            self.button_delete_custom_keys.state(('disabled',))
+            #self.button_delete_custom_keys.state(('disabled',))
         else:
             self.builtinlist['state'] = 'disabled'
             self.custom_keyset_on.state(('!disabled',))
             self.customlist['state'] = 'normal'
-            self.button_delete_custom_keys.state(('!disabled',))
+            #self.button_delete_custom_keys.state(('!disabled',))"""
+        # disallow changes to keysets
+        self.builtinlist['state'] = 'disabled'
+        self.customlist['state'] = 'disabled'
 
     def get_new_keys(self):
         """Handle event to change key binding for selected line.
@@ -1435,7 +1439,7 @@ class KeysPage(Frame):
 
     def on_bindingslist_select(self, event):
         "Activate button to assign new keys to selected action."
-        self.button_new_keys.state(('!disabled',))
+        #self.button_new_keys.state(('!disabled',))
 
     def create_new_key_set(self, new_key_set_name):
         """Create a new custom key set with the given name.
