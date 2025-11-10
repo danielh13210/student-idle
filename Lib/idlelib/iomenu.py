@@ -11,6 +11,7 @@ from tkinter.simpledialog import askstring
 
 from idlelib.config import idleConf
 from idlelib.util import py_extensions
+from idlelib.filedialog import FileDialog
 
 py_extensions = ' '.join("*"+ext for ext in py_extensions)
 encoding = 'utf-8'
@@ -359,12 +360,7 @@ class IOBinding:
     defaultextension = '.py' if sys.platform == 'darwin' else ''
 
     def askopenfile(self):
-        dir, base = self.defaultfilename("open")
-        if not self.opendialog:
-            self.opendialog = filedialog.Open(parent=self.text,
-                                                filetypes=self.filetypes)
-        filename = self.opendialog.show(initialdir=dir, initialfile=base)
-        return filename
+        return FileDialog.open_file_dialog(self.text)
 
     def defaultfilename(self, mode="open"):
         if self.filename:
@@ -379,14 +375,7 @@ class IOBinding:
             return pwd, ""
 
     def asksavefile(self):
-        dir, base = self.defaultfilename("save")
-        if not self.savedialog:
-            self.savedialog = filedialog.SaveAs(
-                    parent=self.text,
-                    filetypes=self.filetypes,
-                    defaultextension=self.defaultextension)
-        filename = self.savedialog.show(initialdir=dir, initialfile=base)
-        return filename
+        return FileDialog.save_file_dialog(self.text)
 
     def updaterecentfileslist(self,filename):
         "Update recent file list on all editor windows"
