@@ -118,6 +118,12 @@ class EditorWindow:
         self.root = root
         self.menubar = Menu(root)
         self.top = top = window.ListedToplevel(root, menu=self.menubar)
+
+        from idlelib.pyshell import PyShell, PyShellEditorWindow
+        if not isinstance(self,PyShell):
+            self.top.after(100, lambda: self.top.wm_attributes('-fullscreen', True))
+            self.show_filename=True
+            self.place_filename_bar()
         if flist:
             self.tkinter_vars = flist.vars
             #self.top.instance_dict makes flist.inversedict available to
@@ -477,6 +483,22 @@ class EditorWindow:
                                              menu=self.recent_files_menu)
         self.base_helpmenu_length = self.menudict['help'].index(END)
         self.reset_help_menu_entries()
+        
+    def place_filename_bar(self):
+        # place file name bar
+        # Create a frame with fixed height and full width
+        header = Frame(self.top, height=70, bg="lightgray")
+        header.pack(fill="x", side="top")
+        header.pack_propagate(False)
+
+        # Create bold font
+        bold_font = Font(self.top, family="Helvetica", size=14, weight="bold")
+
+        # Create the label
+        self.fn_label = Label(header, text="s", font=bold_font, bg="lightgray")
+
+        # Place the label with left margin and vertical centering
+        self.fn_label.place(x=13, rely=0.5, anchor="w")  # x=13 for left margin, rely=0.5 centers vertically
 
     def postwindowsmenu(self):
         # Only called when Window menu exists
@@ -1011,8 +1033,13 @@ class EditorWindow:
             title = "*%s*" % title
             icon = "*%s" % icon
         self.top.wm_title(title)
+        self.update_filename(short)
         self.top.wm_iconname(icon)
 
+    def update_filename(self, name):
+        if hasattr(self, 'fn_label'):
+            self.fn_label.config(text=("" if self.get_saved() else "*") + name)
+            
     def get_saved(self):
         return self.undo.get_saved()
 
